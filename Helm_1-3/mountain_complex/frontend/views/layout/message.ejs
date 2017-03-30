@@ -1,0 +1,10 @@
+<script type="text/javascript">
+$(document).ready(function() {
+  <% if( locals.message) { %>
+  var message = <%-JSON.stringify( locals.message)%>;
+  if( message.messageText && message.messageType){
+    Materialize.toast( message.messageText, 4000, 'toast-'+ message.messageType);
+  }
+  <% } %>
+});
+</script>

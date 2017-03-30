@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../layout/head %>
+  </head>
+  <body>
+    <% include ../layout/header %>
+
+    <main>
+      <div class="row">
+
+        <div class="col s12">
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <div class="col s12">
+                  <h4>Patient</h4>
+                </div>
+                <div class="col s12">
+                  <a href="/patient/search"><i class="fg-light-blue small material-icons">skip_previous</i></a>
+                  <a id="patientMetaDataToggle" href="#"><i class="icon-go small material-icons">info_outline</i></a>
+                </div>
+
+                <form autocomplete="off" id="patientView" class="">
+                  <fieldset class="meta-data" style="display: none;">
+                    <legend>Meta Data</legend>
+                    <div class="row">
+                      <div class="input-field col s12 m6">
+                        <input id="recordId" name="recordId" type="text" readonly>
+                        <label for="recordId">Record ID</label>
+                      </div>
+                      <div class="input-field col s12 m6">
+                        <input id="isDeleted" name="isDeleted" type="text" readonly>
+                        <label for="isDeleted">Is Deleted</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12 m6">
+                        <input id="createdOn" name="createdOn" type="text" readonly>
+                        <label for="createdOn">Created On</label>
+                      </div>
+                      <div class="input-field col s12 m6">
+                        <input id="updatedOn" name="updatedOn" type="text" readonly>
+                        <label for="updatedOn">Updated On</label>
+                      </div>
+                    </div>
+                  </fieldset>
+                  <br>
+
+                  <div class="row">
+                    <span class="col s12">
+                      <strong>
+                        <span id="firstName"></span> <span id="middleName"></span> <span id="lastName"></span>
+                      </strong>
+                    </span>
+                    <span class="col s12">
+                      <span id="dateOfBirth" data-type="date"></span>
+                    </span>
+                    <span class="col s12 m6">
+                      <span id="primaryPhone"></span>
+                    </span>
+                    <span class="col s12 m6">
+                      <span id="alternatePhone"></span>
+                    </span>
+                    <span class="col s12">
+                      <span id="email"></span>
+                    </span>
+                    <span class="col s12">
+                      <span id="address"></span>
+                    </span>
+                    <span class="col s12">
+                      <span id="city"></span> <span id="state"></span> <span id="zip"></span>
+                    </span>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+          </div> <!-- card -->
+        </div> <!-- grid -->
+      </div> <!-- row -->
+
+      <!-- Add Additional Features Here -->
+      <div class="row">
+        <h3>Health <small></small></h3>
+        <hr>
+        <% include ../diagnosis/card %>
+        <% include ../medication/card %>
+        <% include ../bloodPressure/card %>
+        <% include ../bloodWork/card %>
+        <% include ../bodyComposition/card %>
+        <% include ../demographics/card %>
+      </div>
+
+      <!-- Add Additional Features Here -->
+      <div class="row">
+        <h3>Connections <small></small></h3>
+        <hr>
+        <% include ../emergencyContact/card %>
+        <% include ../networkContact/card %>
+        <% include ../programReferral/card %>
+      </div>
+
+      <!-- Add Additional Features Here -->
+      <div class="row">
+        <h3>Activity <small></small></h3>
+        <hr>
+        <% include ../navigation/card %>
+        <% include ../reminder/card %>
+        <% include ../appointment/card %>
+        <% include ../resourceReferral/card %>
+      </div>
+
+    </main>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+      var reference = <%-JSON.stringify(reference)%>
+
+      var patientModelView = new MountainComplexModelView({
+        "model": 'patient'
+      });
+
+      if( reference && reference.model) {
+        patientModelView.load( reference.model);
+      }
+
+    });
+    </script>
+
+    <% include ../layout/footer %>
+  </body>
+</html>

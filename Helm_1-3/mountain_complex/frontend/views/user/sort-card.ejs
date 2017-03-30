@@ -1,0 +1,51 @@
+<div id="userSortCard" class="card horizontal" style="display: none;">
+  <div class="card-stacked">
+    <div class="card-content">
+      <h4>Sort
+        <span>
+          <a id="userSortAdd" href="#"><i class="icon-go small material-icons">add_circle</i></a>
+          <a id="userSortClear" href="#"><i class="icon-warn small material-icons">clear</i></a>
+        </span>
+      </h4>
+      <form autocomplete="off" id="userSortForm">
+      </form>
+    </div>
+
+    <div class="card-action">
+      <button id="userSortSave" class="btn waves-effect waves-light">Sort</button>
+      <button id="userSortClose" class="btn waves-effect waves-light">Close</button>
+    </div>
+    <script>
+    $(document).ready(function() {
+      var userSortRow =
+        '<div class="row">\
+          <div class="input-field col s6">\
+            <select name="sort_field">\
+              <option value="" disabled selected>Choose Sorter</option>\
+              <option value="email">Email</option>\
+            </select>\
+            <label>Sort</label>\
+          </div>\
+          <div class="input-field col s4">\
+            <select name="sort_direction">\
+              <option value="ASC">Ascending (a to z)</option>\
+              <option value="DESC">Descending (z to a)</option>\
+            </select>\
+            <label>Direction</label>\
+          </div>\
+          <div class="input-field col s2">\
+            <a id="userRemoveSort" href="#"><i class="icon-danger small material-icons">remove_circle</i></a>\
+          </div>\
+        </div>';
+
+      var userSort = new MountainComplexSortForm({
+        "model": 'user'
+        , "sortRow": userSortRow
+      });
+
+      var data = <%-JSON.stringify(data)%>
+      userSort.update( data);
+    });
+    </script>
+  </div>
+</div>

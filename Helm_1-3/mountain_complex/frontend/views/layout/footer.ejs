@@ -1,0 +1,52 @@
+<% include ./message %>
+<footer class="page-footer blue-grey">
+  <div class="container">
+    <div class="row">
+      <div class="col l6 s12">
+        <h5 class="white-text"><%= constants.application %> <small><%= constants.version %></small></h5>
+        <p class="grey-text text-lighten-4"><%= constants.tagline %></p>
+      </div>
+      <div class="col l4 offset-l2 s12">
+        <h5 class="white-text">Links</h5>
+        <ul>
+          <li><a class="grey-text text-lighten-3" href="/">Promotion</a></li>
+          <li><a class="grey-text text-lighten-3" href="/home">Home</a></li>
+          <li><a class="grey-text text-lighten-3" href="/terms">Terms of Service</a></li>
+          <li><a class="grey-text text-lighten-3" href="/privacy">Privacy Policy</a></li>
+          <li><a class="grey-text text-lighten-3" href="/about">About Us</a></li>
+          <li>
+          <% if( constants.linkedin) { %>
+            <a class="grey-text text-lighten-3 icon-padding" href="<%= constants.linkedin %>" target="_blank"><i class="fa fa-linkedin"></i></a>
+          <% } %>
+          <% if( constants.facebook) { %>
+            <a class="grey-text text-lighten-3 icon-padding" href="<%= constants.facebook %>" target="_blank"><i class="fa fa-facebook"></i></a>
+          <% } %>
+          <% if( constants.twitter) { %>
+            <a class="grey-text text-lighten-3 icon-padding" href="<%= constants.twitter %>" target="_blank"><i class="fa fa-twitter"></i></a>
+          <% } %>
+          <% if( constants.youtube) { %>
+            <a class="grey-text text-lighten-3 icon-padding" href="<%= constants.youtube %>" target="_blank"><i class="fa fa-youtube"></i></a>
+          <% } %>
+          </li>
+          <li><img src="/vendor/mountain_complex/images/comodo_secure_seal_76x26_transp.png" alt="Comodo SSL Badge" /></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copyright">
+    <div class="container">
+      <%= constants.copyright %>
+    </div>
+  </div>
+</footer>
+<% if( constants.googleAnalytics) { %>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '<%= constants.googleAnalytics %>', 'auto');
+    ga('send', 'pageview');
+  </script>
+<% } %>

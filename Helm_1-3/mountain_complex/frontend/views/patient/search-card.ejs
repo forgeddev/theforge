@@ -1,0 +1,60 @@
+<div id="patientSearchCard" class="card horizontal">
+  <div class="card-stacked">
+    <div class="card-content">
+      <h4>Search Criteria
+      </h4>
+      <form autocomplete="off" id="patientSearchForm" action="/patient/search" method="post">
+        <div class="row">
+          <div class="input-field col s12 m6">
+            <input id="lastName" name="lastName" type="text" class="validate">
+            <label for="lastName">Last Name</label>
+          </div>
+          <div class="input-field col s12 m6">
+            <input id="firstName" name="firstName" type="text" class="validate">
+            <label for="firstName">First Name</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="dateOfBirth" name="dateOfBirth" type="date" class="validate">
+            <label class="active" for="dateOfBirth">Date Of Birth</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12 m6">
+            <input id="internalId" name="internalId" type="text" class="validate">
+            <label for="internalId">Internal Id</label>
+          </div>
+          <div class="input-field col s12 m6">
+            <input id="alternateId" name="alternateId" type="text" class="validate">
+            <label for="alternateId">Alternate Id</label>
+          </div>
+        </div>
+
+        <div class="card-action">
+          <button class="btn waves-effect waves-light" type="submit">Search</button>
+          <button class="btn" id="patientSearchClear" href="#">Clear</button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+    $(document).ready(function() {
+
+      $("#patientSearchClear").click( function(event){
+        event.preventDefault();
+
+        $("#lastName").val("");
+        $("#firstName").val("");
+        $("#dateOfBirth").val("");
+      });
+
+      <% if( locals.form) { %>
+        var formData = <%-JSON.stringify(locals.form) %>
+        MountainComplexBase.loadForm("patientSearchForm", formData);
+      <% } %>
+
+    });
+    </script>
+  </div>
+</div>

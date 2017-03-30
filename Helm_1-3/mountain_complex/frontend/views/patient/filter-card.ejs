@@ -1,0 +1,70 @@
+<div id="patientFilterCard" class="card horizontal" style="display: none;">
+  <div class="card-stacked">
+    <div class="card-content">
+      <h4>Filter
+        <span>
+          <a id="patientFilterAdd" href="#"><i class="icon-go small material-icons">add_circle</i></a>
+          <a id="patientFilterClear" href="#"><i class="icon-warn small material-icons">clear</i></a>
+        </span>
+      </h4>
+      <form autocomplete="off" id="patientFilterForm">
+      </form>
+    </div>
+
+    <div class="card-action">
+      <button id="patientFilterSave" class="btn waves-effect waves-light">Filter</button>
+      <button id="patientFilterClose" class="btn waves-effect waves-light">Close</button>
+    </div>
+    <script>
+    $(document).ready(function() {
+      var patientFilterRow =
+        '<div class="row">\
+          <div class="input-field col s4">\
+            <select name="filter_field">\
+              <option value="" disabled selected>Choose Filter</option>\
+              <option value="recordId">Record ID</option>\
+              <option value="createdOn">Created On</option>\
+              <option value="updatedOn">Updated On</option>\
+              <option value="isDeleted">Is Deleted</option>\
+              <option value="name">Name</option>\
+              <option value="purchased">Purchased</option>\
+              <option value="outOfStock">Out of Stock</option>\
+              <option value="quantity">Quantity</option>\
+              <option value="cost">Cost</option>\
+            </select>\
+            <label>Filter</label>\
+          </div>\
+          <div class="input-field col s3">\
+            <select name="filter_type">\
+              <option value="equals">Equals</option>\
+              <option value="contains">Contains</option>\
+              <option value="starts">Starts</option>\
+              <option value="ends">Ends</option>\
+              <option value="in">In</option>\
+              <option value="greaterthan">Greater Than</option>\
+              <option value="greaterorequal">Greater or Equal</option>\
+              <option value="lessthan">Less Than</option>\
+              <option value="lessthanorequal">Less Than or Equal</option>\
+            </select>\
+            <label>Type</label>\
+          </div>\
+          <div class="input-field col s3">\
+            <input type="text" id="filter_value" name="filter_value" />\
+            <label for="filter_value">Values</label>\
+          </div>\
+          <div class="input-field col s2">\
+            <a id="patientFilterRemove" href="#"><i class="icon-danger small material-icons">remove_circle</i></a>\
+          </div>\
+        </div>';
+
+      var patientFilter = new MountainComplexFilterForm({
+        "model": 'patient'
+        , "filterRow": patientFilterRow
+      });
+
+      var data = <%-JSON.stringify(data)%>
+      patientFilter.update( data);
+    });
+    </script>
+  </div>
+</div>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../layout/head %>
+  </head>
+  <body>
+    <% include ../layout/header %>
+
+    <main>
+      <div class="row">
+
+        <div class="col s12">
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+
+                <h4>Response</h4>
+
+
+                <form autocomplete="off" id="responseForm" class="" action="/response/add" method="post">
+
+                  <fieldset class="meta-data" style="display: none;">
+                    <legend>Meta Data</legend>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input id="trackingId" name="trackingId" type="text" readonly>
+                        <label for="trackingId">Tracking Id</label>
+                      </div>
+                    </div>
+                  </fieldset>
+
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <%- include('../layout/dropdown', {
+                        "id": "responseType"
+                        , "label": "Response Type"
+                        , "category": "Response"
+                        , "group": "responseType"
+                      });
+                      %>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="input-field col s6">
+                      <input id="when" name="when" type="date" class="validate" readonly>
+                      <label class="active" for="when">When</label>
+                    </div>
+                    <div class="input-field col s6">
+                      <input id="whenTime" name="whenTime" type="Time" class="validate" readonly>
+                      <label class="active" for="whenTime">Time</label>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <input id="who" name="who" type="text" class="validate">
+                      <label for="who">Resource Contact</label>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <textarea id="summary" name="summary" class="materialize-textarea"></textarea>
+                      <label for="summary">Summary</label>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <textarea id="notes" name="notes" class="materialize-textarea"></textarea>
+                      <label for="notes">Notes</label>
+                    </div>
+                  </div>
+
+
+              </div>
+              <div class="card-action">
+                <button class="btn waves-effect waves-light" type="submit">Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+      var reference = <%-JSON.stringify(reference)%>
+
+      var responseEntryForm = new MountainComplexEntryForm({
+        "model": 'response'
+        , "redirect_after_submit": true
+        , "redirect_url": "<%= site.base_url %>/response/thankyou"
+      });
+
+      if( reference && reference.model.trackingId){
+        var currentDate = new Date()
+          , strDate = moment(currentDate).format('YYYY-MM-DD')
+          , strTime = moment(currentDate).format('HH:mm');
+        $("#responseForm #when").val(strDate);
+        $("#responseForm #whenTime").val(strTime);
+        $("#responseForm #trackingId").val(reference.model.trackingId);
+      }
+
+      // Update Drop Downs
+      $('select').material_select();
+    });
+
+
+    </script>
+
+    <% include ../layout/footer %>
+  </body>
+</html>

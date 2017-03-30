@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../layout/head %>
+  </head>
+  <body>
+    <% include ../layout/header %>
+
+    <main>
+      <div class="row">
+        <div class="col s12">
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <div class="col s12">
+                  <h2>Diagnosis</h2>
+                </div>
+                <div class="col s12">
+                  <% if(locals.navigation && locals.navigation.back_page) { %>
+                    <a href="<%=locals.navigation.back_page %>"><i class="fg-light-blue small material-icons">skip_previous</i></a>
+                  <% } else { %>
+                    <a href="/home"><i class="fg-light-blue small material-icons">skip_previous</i></a>
+                  <% } %>
+                  <a href="/diagnosis/edit/new"><i class="fg-green small material-icons">add_circle</i></a>
+                </div>
+                <hr>
+
+                <script>
+                  var data = <%-JSON.stringify(data)%>
+                  console.log(data);
+                </script>
+
+                <%
+                  if( data && data.rows && data.rows.length > 0) {
+                    for(var i=0; i < data.rows.length; i++) {
+                %>
+                      <div class="col s12">
+                        <div class="card horizontal">
+                          <div class="card-stacked">
+                            <div class="card-content">
+
+                              <div class="row">
+                                <span class="col s12">
+                                  <strong><%= locals.settings.mountainComplex.template.decodeListId(data.rows[i].diagnosisConditionType) %></strong>
+                                  <i>(<%= locals.settings.mountainComplex.template.decodeListId(data.rows[i].diagnosisOutcomeType) %>)</i>
+                                </span>
+                                <span class="col s12">
+                                  <%= locals.settings.mountainComplex.template.formatDate(data.rows[i].diagnosisDate) %>
+                                </span>
+                                <span class="col s12">
+                                  <strong>Treatment Plan</strong>
+                                </span>
+                                <span class="col s12">
+                                  <%= data.rows[i].treatmentPlan %>
+                                </span>
+                                <span class="col s12">
+                                  <strong>Medical History</strong>
+                                </span>
+                                <span class="col s12">
+                                  <%= data.rows[i].medicalHistory %>
+                                </span>
+                              </div>
+
+                            </div>
+                            <div class="card-action">
+                              <a href="/diagnosis/view/<%= data.rows[i].recordId %>"><i class="icon-info small material-icons">search</i></a>
+                              <a href="/diagnosis/edit/<%= data.rows[i].recordId %>"><i class="icon-go small material-icons">mode_edit</i></a>
+                              <% if( data.rows[i].isDeleted == 'Y') { %>
+                              <a href="javascript:// Restore Record"
+                                onclick="MountainComplexBase.modalActionHandler(this, '/diagnosis/restore/<%= data.rows[i].recordId %>', 'Confirm Restore', 'Restore Record');">
+                                <i class="fg-orange fa fa-undo fa-2x" aria-hidden="true"></i>
+                              </a>
+                              <% } else { %>
+                              <a href="javascript:// Remove Record"
+                                onclick="MountainComplexBase.modalActionHandler(this, '/diagnosis/remove/<%= data.rows[i].recordId %>', 'Confirm Remove', 'Remove Record');">
+                                <i class="icon-danger small material-icons">remove_circle</i>
+                              </a>
+                              <% } %>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                <%
+                    }
+                  }
+                %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $('select').material_select();
+    });
+    </script>
+
+    <% include ../layout/footer %>
+  </body>
+</html>

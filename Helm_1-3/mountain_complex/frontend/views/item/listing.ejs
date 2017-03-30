@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../layout/head %>
+  </head>
+  <body>
+    <% include ../layout/header %>
+
+    <main>
+      <div class="row">
+
+        <div class="col s12">
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+                <div class="col s12">
+                  <h2>Items</h2>
+                </div>
+                <div class="col s12">
+                  <a href="/home"><i class="fg-light-blue small material-icons">skip_previous</i></a>
+                  <a href="/item/edit/new"><i class="fg-green small material-icons">add_circle</i></a>
+                  <a id="itemFilterFormToggle" href="#"><i class="fg-orange small material-icons">filter_list</i></a>
+                  <a id="itemSortFormToggle" href="#"><i class="fg-indigo small material-icons">sort_by_alpha</i></a>
+                </div>
+                <hr>
+
+                <script>
+                  var data = <%-JSON.stringify(data)%>
+                  console.log(data);
+                </script>
+
+
+                <!-- Filter Form -->
+                <% include filter-card %>
+
+                <!-- Sort Form -->
+                <% include sort-card %>
+
+                <table class="striped responsive-table">
+                  <thead>
+                    <tr>
+                        <th data-field="action">Actions</th>
+                        <th data-field="name">Name</th>
+                        <th data-field="quantity">Quantity</th>
+                        <th data-field="cost">Cost</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <%
+                      if( data && data.rows && data.rows.length > 0) {
+                        for(var i=0; i < data.rows.length; i++) {
+                    %>
+                    <tr>
+                      <td>
+                        <a href="/item/view/<%= data.rows[i].recordId %>"><i class="icon-info small material-icons">search</i></a>
+                        <a href="/item/edit/<%= data.rows[i].recordId %>"><i class="icon-go small material-icons">mode_edit</i></a>
+                        <% if( data.rows[i].isDeleted == 'Y') { %>
+                        <a href="javascript:// Restore Record"
+                          onclick="MountainComplexBase.modalActionHandler(this, '/item/restore/<%= data.rows[i].recordId %>', 'Confirm Restore', 'Restore Record');">
+                          <i class="fg-orange fa fa-undo fa-2x" aria-hidden="true"></i>
+                        </a>
+                        <% } else { %>
+                        <a href="javascript:// Remove Record"
+                          onclick="MountainComplexBase.modalActionHandler(this, '/item/remove/<%= data.rows[i].recordId %>', 'Confirm Remove', 'Remove Record');">
+                          <i class="icon-danger small material-icons">remove_circle</i>
+                        </a>
+                        <% } %>
+                      </td>
+                      <td><%= data.rows[i].name %></td>
+                      <td><%= data.rows[i].quantity %></td>
+                      <td><%= data.rows[i].cost %></td>
+                    </tr>
+                    <%
+                        }
+                      }
+                    %>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="card-action">
+                <ul class="pagination">
+                  <%
+                    var backPage = parseInt(data.pagination.on_page) -1
+                      , forwardPage = parseInt(data.pagination.on_page) +1
+                      , onPage = parseInt(data.pagination.on_page)
+                      , pageSize = parseInt(data.pagination.page_size)
+                      , pages = parseInt(data.pagination.pages) +1
+                      , showing = "Page " + onPage + " of " + pages
+
+                    if( backPage < 1) {
+                      backPage = 1;
+                    }
+
+                    if( forwardPage > pages) {
+                      forwardPage = pages;
+                    }
+
+                    var backLink = '/item/listing/' + backPage + '/' + pageSize + '/'
+                      , forwardLink = '/item/listing/' + forwardPage + '/' + pageSize + '/';
+
+                  %>
+                  <li><a href="<%= backLink %>"><i class="material-icons">chevron_left</i></a></li>
+                  <%
+                    for(var pageNumber=1; pageNumber <= pages; pageNumber++) {
+                      var active = (pageNumber == onPage)? "active" : "";
+                  %>
+                  <li class="<%= active %> waves-effect hide-on-med-and-down"><a href="/item/listing/<%= pageNumber %>/<%= pageSize%>/"><%= pageNumber %></a></li>
+                  <% } %>
+                  <li class="hide-on-large-only"><%= showing %></li>
+                  <li><a href="<%= forwardLink %>"><i class="material-icons">chevron_right</i></a></li>
+                </ul>
+              </div>
+
+            </div>
+        </div>
+      </div>
+
+
+
+    </main>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $('select').material_select();
+    });
+    </script>
+
+    <% include ../layout/footer %>
+  </body>
+</html>

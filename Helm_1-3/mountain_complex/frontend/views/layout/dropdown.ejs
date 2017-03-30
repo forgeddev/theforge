@@ -1,0 +1,16 @@
+<select id="<%= locals.id %>" name="<%= locals.id %>">
+  <option value="" disabled selected>Choose</option>
+  <%
+    if( locals.category && locals.group) {
+      var options = locals.settings.mountainComplex.template.getList( locals.category, locals.group);
+
+      options.forEach(function(option){
+  %>
+  <option value="<%= option.recordId %>"><%= option.name %></option>
+  <%
+      });
+
+    }
+  %>
+</select>
+<label><%= locals.label %></label>

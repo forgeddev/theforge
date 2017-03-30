@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../layout/head %>
+  </head>
+  <body>
+    <% include ../layout/header %>
+
+    <main>
+      <div class="row">
+
+        <div class="col s12">
+          <div class="card horizontal">
+            <div class="card-stacked">
+              <div class="card-content">
+
+                <h4>Emergency Contact</h4>
+                <span>
+                  <a href="/emergencyContact/cards"><i class="fg-light-blue small material-icons">skip_previous</i></a>
+                  <a id="emergencyContactMetaDataToggle" href="#"><i class="icon-go small material-icons">info_outline</i></a>
+                </span>
+
+
+                <form autocomplete="off" id="emergencyContactForm" class="" action="/emergencyContact/save" method="post">
+
+                  <fieldset class="meta-data" style="display: none;">
+                    <legend>Meta Data</legend>
+                    <div class="row">
+                      <div class="input-field col s12 m4">
+                        <input id="recordId" name="recordId" type="text" readonly>
+                        <label for="recordId">Record ID</label>
+                      </div>
+                      <div class="input-field col s12 m4">
+                        <input id="parentId" name="parentId" type="text" readonly>
+                        <label for="parentId">Parent ID</label>
+                      </div>
+                      <div class="input-field col s12 m4">
+                        <input id="isDeleted" name="isDeleted" type="text" readonly>
+                        <label for="isDeleted">Is Deleted</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12 m6">
+                        <input id="createdOn" name="createdOn" type="text" readonly>
+                        <label for="createdOn">Created On</label>
+                      </div>
+                      <div class="input-field col s12 m6">
+                        <input id="updatedOn" name="updatedOn" type="text" readonly>
+                        <label for="updatedOn">Updated On</label>
+                      </div>
+                    </div>
+                  </fieldset>
+
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <input id="name" name="name" type="text" class="validate">
+                      <label for="name">Name</label>
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="input-field col s6">
+                      <input id="primaryPhone" name="primaryPhone" type="text" class="validate">
+                      <label for="primaryPhone">Primary Phone</label>
+                    </div>
+                    <div class="input-field col s6">
+                      <input id="alternatePhone" name="alternatePhone" type="text" class="validate">
+                      <label for="alternatePhone">Alternate Phone</label>
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <input id="email" name="email" type="email" class="validate">
+                      <label for="email" data-error="invalid" data-success="valid">Email</label>
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <%- include('../layout/dropdown', {
+                        "id": "relationshipType"
+                        , "label": "Relationship Type"
+                        , "category": "EmergencyContact"
+                        , "group": "relationshipType"
+                      });
+                      %>
+                    </div>
+                  </div>
+
+              </div>
+              <div class="card-action">
+                <button class="btn waves-effect waves-light" type="submit">Save</button>
+                <a class="btn waves-effect waves-light" href="/emergencyContact/cards">Back</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+      var reference = <%-JSON.stringify(reference)%>
+
+      var emergencyContactEntryForm = new MountainComplexEntryForm({
+        "model": 'emergencyContact'
+      });
+
+      if( reference && reference.model) {
+        emergencyContactEntryForm.load( reference.model);
+      } else if( reference && reference.parent){
+        $("#emergencyContactForm #parentId").val(reference.parent.recordId);
+      }
+
+      // Update Drop Downs
+      $('select').material_select();
+    });
+
+
+    </script>
+
+    <% include ../layout/footer %>
+  </body>
+</html>

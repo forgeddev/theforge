@@ -1,0 +1,59 @@
+<div id="itemSortCard" class="card horizontal" style="display: none;">
+  <div class="card-stacked">
+    <div class="card-content">
+      <h4>Sort
+        <span>
+          <a id="itemSortAdd" href="#"><i class="icon-go small material-icons">add_circle</i></a>
+          <a id="itemSortClear" href="#"><i class="icon-warn small material-icons">clear</i></a>
+        </span>
+      </h4>
+      <form autocomplete="off" id="itemSortForm">
+      </form>
+    </div>
+
+    <div class="card-action">
+      <button id="itemSortSave" class="btn waves-effect waves-light">Sort</button>
+      <button id="itemSortClose" class="btn waves-effect waves-light">Close</button>
+    </div>
+    <script>
+    $(document).ready(function() {
+      var itemSortRow =
+        '<div class="row">\
+          <div class="input-field col s6">\
+            <select name="sort_field">\
+              <option value="" disabled selected>Choose Sorter</option>\
+              <option value="recordId">Record ID</option>\
+              <option value="createdOn">Created On</option>\
+              <option value="updatedOn">Updated On</option>\
+              <option value="isDeleted">Is Deleted</option>\
+              <option value="name">Name</option>\
+              <option value="purchased">Purchased</option>\
+              <option value="outOfStock">Out of Stock</option>\
+              <option value="quantity">Quantity</option>\
+              <option value="cost">Cost</option>\
+            </select>\
+            <label>Sort</label>\
+          </div>\
+          <div class="input-field col s4">\
+            <select name="sort_direction">\
+              <option value="ASC">Ascending (a to z)</option>\
+              <option value="DESC">Descending (z to a)</option>\
+            </select>\
+            <label>Direction</label>\
+          </div>\
+          <div class="input-field col s2">\
+            <a id="itemSortRemove" href="#"><i class="icon-danger small material-icons">remove_circle</i></a>\
+          </div>\
+        </div>';
+
+      var itemSort = new MountainComplexSortForm({
+        "model": 'item'
+        , "sortRow": itemSortRow
+      });
+
+      var data = <%-JSON.stringify(data)%>
+      itemSort.update( data);
+    });
+    </script>
+  </div>
+</div>

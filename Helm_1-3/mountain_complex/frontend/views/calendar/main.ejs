@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ../layout/head %>
+  </head>
+  <body>
+    <% include ../layout/header %>
+
+    <main>
+      <script>
+
+      </script>
+      <div id='calendar'></div>
+    </main>
+
+
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $('select').material_select();
+
+      var calendar = $('#calendar').fullCalendar({
+				header:	{
+					left: 'prev,next,today',
+					center: 'title',
+					right: 'month,agendaWeek,agendaDay'
+				}
+        , timezone: 'local'
+				, defaultView: 'month'
+				, selectable: false
+				, selectHelper: false
+				, select: function(start, end, allDay){
+					var title = prompt('Event Title:');
+					if (title){
+						calendar.fullCalendar('renderEvent',
+							{
+								title: title,
+								start: start,
+								end: end,
+								allDay: allDay
+							},
+							true // make the event "stick"
+						);
+					}
+          calendar.fullCalendar('unselect');
+				}
+				, editable: false
+        , viewRender: function( view, element) {
+
+          $.ajax({
+            url: '/calendar/entries'
+            , type: 'post'
+            , dataType: 'json'
+            , data: {
+              "startdate": view.intervalStart.format("YYYY-MM-DD")
+              , "enddate": view.intervalEnd.format("YYYY-MM-DD")
+            }
+            , encode: true
+          }).done( function(response){
+            if( response.message && response.message.messageType){
+              if( response.message.messageType == 'error') {
+                $('#error_modal > div.modal-content > h4').html(response.message.messageText);
+                $('#error_modal > div.modal-content > p').html(response.message.details);
+                $('#error_modal').modal('open');
+              } else {
+                Materialize.toast( response.message.messageText, 4000, 'toast-'+response.message.messageType);
+              }
+            }
+
+            if( response.data && response.data.rows) {
+              $('#calendar').fullCalendar('removeEvents');
+              $('#calendar').fullCalendar('addEventSource', response.data.rows);
+              $('#calendar').fullCalendar('rerenderEvents');
+            }
+          }).fail( function(response){
+            if( response.message && response.message.messageType){
+              if( response.message.messageType == 'error') {
+                $('#error_modal > div.modal-content > h4').val(response.message.messageText);
+                $('#error_modal > div.modal-content > p').val(response.message.details);
+                $('#error_modal').modal('open');
+              } else {
+                Materialize.toast( response.message.messageText + ": " + response.details, 4000, 'toast-'+response.message.messageType);
+              }
+            } else {
+              Materialize.toast( "Server Failure", 4000, 'toast-fail');
+            }
+          });
+        }
+			});
+    });
+    </script>
+
+    <% include ../layout/footer %>
+  </body>
+</html>

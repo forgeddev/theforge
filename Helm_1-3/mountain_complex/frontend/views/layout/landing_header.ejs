@@ -1,0 +1,35 @@
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+
+
+<nav class="blue-grey">
+  <div class="nav-wrapper">
+    <a href="/home" class="brand-logo">
+      <%= constants.application %>
+    </a>
+    <a href="#" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
+    <ul class="right hide-on-med-and-down">
+      <li><a href="/home">Home</a></li>
+    </ul>
+    <div class="side-nav" id="mobile-menu">
+      <div class="col s4">
+        <div class="card blue-grey darken-1" style="margin: 0px;">
+          <div class="card-content white-text">
+            <span class="card-title"><%= constants.application %></span>
+            <img class="responsive-img" src="/images/HelmIcon.png"></img>
+          </div>
+          <div class="card-action">
+            <a href="/home">Home</a>
+          </div>
+        </div>
+        <ul>
+        </ul>
+      </div>
+    </div>
+</nav>
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".button-collapse").sideNav();
+  $('.modal').modal();
+});
+</script>

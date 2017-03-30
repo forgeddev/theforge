@@ -1,0 +1,38 @@
+{
+  "constants": {
+    "application": "Helm"
+    , "tagline": "Health Evaluation & Lifestyle Management"
+    , "version": "1.3.0"
+    , "copyright": "Copyright © 2017 - Forged Development - All Rights Reserved"
+    , "linkedin": null
+    , "facebook": null
+    , "twitter": null
+    , "youtube": null
+    , "program_name": "MyName Health Program"
+    , "email_notice": "Email is intended for resources affiliated with our program.  If you have received this email in error please contact operations@forgeddev.com"
+  }
+  , "framework": {
+    "log": true
+  }
+  , "authentication": {
+    "self_registration": true
+    , "self_register_as_admin": true
+  }
+  , "crypto": {
+    "algorithm": "aes-256-ctr"
+    , "password": "gAbFnLDnnXUztswhQK8d"
+  }
+  , "email": {
+    "user": "operations@forgeddev.com"
+    , "password": "OpsTest357!!"
+  }
+  , "database": {
+    "connectionLimit": 100
+    , "host": "localhost"
+    , "user": "helm_user"
+    , "password": "HellFire9696!!"
+    , "database": "helm130"
+    , "debug": false
+    , "log": true
+  }
+}

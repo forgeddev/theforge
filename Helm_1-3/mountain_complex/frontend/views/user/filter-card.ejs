@@ -1,0 +1,64 @@
+<div id="userFilterCard" class="card horizontal" style="display: none;">
+  <div class="card-stacked">
+    <div class="card-content">
+      <h4>Filter
+        <span>
+          <a id="userFilterAdd" href="#"><i class="icon-go small material-icons">add_circle</i></a>
+          <a id="userFilterClear" href="#"><i class="icon-warn small material-icons">clear</i></a>
+        </span>
+      </h4>
+      <form autocomplete="off" id="userFilterForm">
+      </form>
+    </div>
+
+    <div class="card-action">
+      <button id="userFilterSave" class="btn waves-effect waves-light">Filter</button>
+      <button id="userFilterClose" class="btn waves-effect waves-light">Close</button>
+    </div>
+    <script>
+    $(document).ready(function() {
+
+      var userFilterRow =
+        '<div class="row">\
+          <div class="input-field col s4">\
+            <select name="filter_field">\
+              <option value="" disabled selected>Choose Filter</option>\
+              <option value="email">Email</option>\
+              <option value="isDeleted">Is Deleted</option>\
+            </select>\
+            <label>Filter</label>\
+          </div>\
+          <div class="input-field col s3">\
+            <select name="filter_type">\
+              <option value="equals">Equals</option>\
+              <option value="contains">Contains</option>\
+              <option value="starts">Starts</option>\
+              <option value="ends">Ends</option>\
+              <option value="in">In</option>\
+              <option value="greaterthan">Greater Than</option>\
+              <option value="greaterorequal">Greater or Equal</option>\
+              <option value="lessthan">Less Than</option>\
+              <option value="lessthanorequal">Less Than or Equal</option>\
+            </select>\
+            <label>Type</label>\
+          </div>\
+          <div class="input-field col s3">\
+            <input type="text" id="filter_value" name="filter_value" />\
+            <label for="filter_value">Values</label>\
+          </div>\
+          <div class="input-field col s2">\
+            <a id="userFilterRemove" href="#"><i class="icon-danger small material-icons">remove_circle</i></a>\
+          </div>\
+        </div>';
+
+      var userFilter = new MountainComplexFilterForm({
+        "model": 'user'
+        , "filterRow": userFilterRow
+      });
+
+      var data = <%-JSON.stringify(data)%>
+      userFilter.update( data);
+    });
+    </script>
+  </div>
+</div>

@@ -1,0 +1,86 @@
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.2.0/fullcalendar.min.js"></script>
+<script type="text/javascript" src="/vendor/mountain_complex/javascripts/mountain-complex-base.js"></script>
+<script type="text/javascript" src="/vendor/mountain_complex/javascripts/mountain-complex-model-view.js"></script>
+<script type="text/javascript" src="/vendor/mountain_complex/javascripts/mountain-complex-entry-form.js"></script>
+<script type="text/javascript" src="/vendor/mountain_complex/javascripts/mountain-complex-filter-form.js"></script>
+<script type="text/javascript" src="/vendor/mountain_complex/javascripts/mountain-complex-sort-form.js"></script>
+
+<script>
+  var authority = <%-JSON.stringify(authority)%>
+
+  var constants = <%-JSON.stringify(constants)%>
+
+  var site = <%-JSON.stringify(site)%>
+</script>
+
+<nav class="blue-grey">
+  <div class="nav-wrapper">
+    <a href="/home" class="brand-logo">
+      <%= constants.application %>
+    </a>
+
+    <a href="#" data-activates="mobile-menu" class="button-collapse"><i class="material-icons">menu</i></a>
+    <ul class="right hide-on-med-and-down">
+      <li><a href="/home">Home</a></li>
+      <% if( authority && authority.disposition && authority.disposition.indexOf('logged_in') > -1) { %>
+        <li><a href="/calendar/main">Calendar</a></li>
+        <li><a href="/patient/search">Patient Search</a></li>
+        <li><a href="#">Reports</a></li>
+      <% } %>
+      <% if( authority && authority.disposition && authority.disposition.indexOf('admin') > -1) { %>
+        <li><a href="/admin">Admin</a></li>
+      <% } %>
+    </ul>
+    <div class="side-nav" id="mobile-menu">
+      <div class="col s4">
+        <div class="card blue-grey darken-1" style="margin: 0px;">
+          <div class="card-content white-text">
+            <span class="card-title"><%= constants.application %></span>
+            <img class="responsive-img" src="/images/HelmIcon.png"></img>
+          </div>
+          <div class="card-action">
+            <a href="/home">Home</a>
+          </div>
+        </div>
+        <ul>
+          <% if( authority && authority.disposition && authority.disposition.indexOf('logged_in') > -1) { %>
+            <li><a href="/calendar/main">Calendar</a></li>
+            <li><a href="/patient/search">Patient Search</a></li>
+            <li><a href="#">Reports</a></li>
+          <% } %>
+          <% if( authority && authority.disposition && authority.disposition.indexOf('admin') > -1) { %>
+            <li><a href="/admin">Admin</a></li>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<div id="error_modal" class="modal">
+  <div class="modal-content">
+    <h4>Error</h4>
+    <p></p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Dismiss</a>
+  </div>
+</div>
+<div id="action_modal" class="modal">
+  <div class="modal-content">
+    <h4>Title</h4>
+    <p></p>
+  </div>
+  <div class="modal-footer">
+    <a id="action_button" data-url="#" href="javascript:// Peform Action" class="modal-action modal-close waves-effect waves-green btn-flat"><span id="action_button_title">Action</span></a>
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".button-collapse").sideNav();
+  $('.modal').modal();
+});
+</script>
